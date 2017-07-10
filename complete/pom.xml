@@ -18,8 +18,10 @@
     </parent>
 
     <properties>
-        <docker.image.prefix>springio</docker.image.prefix>
+        <azure.containerRegistry>your-azure-container-registry-name</azure.containerRegistry>
+        <docker.image.prefix>${azure.containerRegistry}.azurecr.io</docker.image.prefix>
         <java.version>1.8</java.version>
+        <maven.build.timestamp.format>yyyyMMddHHmmssSSS</maven.build.timestamp.format>
     </properties>
 
     <build>
@@ -35,6 +37,8 @@
                 <version>0.4.11</version>
                 <configuration>
                     <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
+                    <registryUrl>https://${docker.image.prefix}</registryUrl>
+                    <serverId>${azure.containerRegistry}</serverId>
                     <dockerDirectory>src/main/docker</dockerDirectory>
                     <resources>
                         <resource>
@@ -43,6 +47,30 @@
                             <include>${project.build.finalName}.jar</include>
                         </resource>
                     </resources>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.microsoft.azure</groupId>
+                <artifactId>webapp-maven-plugin</artifactId>
+                <version>0.1.1</version>
+                <configuration>
+                    <authentication>
+                        <serverId>azure-auth</serverId>
+                    </authentication>
+                    <resourceGroup>maven-plugin</resourceGroup>
+                    <appName>maven-linux-app-${maven.build.timestamp}</appName>
+                    <region>westus</region>
+                    <containerSettings>
+                        <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
+                        <registryUrl>https://${docker.image.prefix}</registryUrl>
+                        <serverId>${azure.containerRegistry}</serverId>
+                    </containerSettings>
+                    <appSettings>
+                        <property>
+                            <name>PORT</name>
+                            <value>8080</value>
+                        </property>
+                    </appSettings>
                 </configuration>
             </plugin>
             <!-- end::plugin[] -->
