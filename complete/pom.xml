@@ -20,6 +20,7 @@
     <properties>
         <docker.image.prefix>springio</docker.image.prefix>
         <java.version>1.8</java.version>
+        <maven.build.timestamp.format>yyyyMMddHHmmssSSS</maven.build.timestamp.format>
     </properties>
 
     <build>
@@ -43,6 +44,28 @@
                             <include>${project.build.finalName}.jar</include>
                         </resource>
                     </resources>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.microsoft.azure</groupId>
+                <artifactId>webapp-maven-plugin</artifactId>
+                <version>0.1.0</version>
+                <configuration>
+                    <authentication>
+                        <serverId>azure-auth</serverId>
+                    </authentication>
+                    <resourceGroup>maven-plugin</resourceGroup>
+                    <appName>maven-linux-app-${maven.build.timestamp}</appName>
+                    <region>southeastasia</region>
+                    <containerSettings>
+                        <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
+                    </containerSettings>
+                    <appSettings>
+                        <property>
+                            <name>PORT</name>
+                            <value>8080</value>
+                        </property>
+                    </appSettings>
                 </configuration>
             </plugin>
             <!-- end::plugin[] -->
