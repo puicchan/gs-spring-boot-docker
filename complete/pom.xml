@@ -56,7 +56,7 @@
                     </authentication>
                     <resourceGroup>maven-plugin</resourceGroup>
                     <appName>maven-linux-app-${maven.build.timestamp}</appName>
-                    <region>southeastasia</region>
+                    <region>westus</region>
                     <containerSettings>
                         <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
                     </containerSettings>
