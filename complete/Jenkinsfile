@@ -1,0 +1,21 @@
+node {
+  stage('init') {
+    checkout scm
+  }
+  
+  stage('build') {
+    sh 'mvn clean package'
+  }
+  
+  stage('deploy') {
+    def resourceGroup = 'kenchenwebapplinux1'
+    def webAppName = 'kenchenwebapplinux1'
+    def registryServer = 'kenchenacrtest.azurecr.io'
+    def imageName = "$registryServer/gs-spring-boot-docker"
+    sh 'cp src/main/docker/Dockerfile target/'
+    azureWebAppPublish azureCredentialsId: 'vs_china_jenkins', publishType: 'docker',
+                       resourceGroup: resourceGroup, appName: webAppName,
+                       dockerFilePath: 'target/Dockerfile', dockerImageName: imageName, dockerImageTag: 'latest',
+                       dockerRegistryEndpoint: [credentialsId: 'kenchenacrtest', url: "http://$registryServer"]
+  }
+}
