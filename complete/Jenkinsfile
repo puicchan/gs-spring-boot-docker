@@ -1,4 +1,4 @@
-ynode {
+node {
   stage('init') {
     checkout scm
   }
