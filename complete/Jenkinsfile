@@ -10,16 +10,16 @@ node {
   }
   
   stage('deploy') {
-    def resourceGroup = 'kenchenwebapplinux1'
-    def webAppName = 'kenchenwebapplinux1'
-    def registryServer = 'kenchenacrtest.azurecr.io'
+    def resourceGroup = 'pclinuxdemosg'
+    def webAppName = 'pclinuxdemo2'
+    def registryServer = 'pcregistry1.azurecr.io'
     def imageName = "$registryServer/gs-spring-boot-docker"
     dir('complete') {
       sh 'cp src/main/docker/Dockerfile target/'
-      azureWebAppPublish azureCredentialsId: 'vs_china_jenkins', publishType: 'docker',
+      azureWebAppPublish azureCredentialsId: 'msp', publishType: 'docker',
                          resourceGroup: resourceGroup, appName: webAppName,
                          dockerFilePath: 'target/Dockerfile', dockerImageName: imageName, dockerImageTag: 'latest',
-                         dockerRegistryEndpoint: [credentialsId: 'kenchenacrtest', url: "http://$registryServer"]
+                         dockerRegistryEndpoint: [credentialsId: 'azurecredential', url: "http://$registryServer"]
     }
   }
 }
