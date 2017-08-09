@@ -1,4 +1,4 @@
-node {
+ynode {
   stage('init') {
     checkout scm
   }
@@ -16,7 +16,7 @@ node {
     def imageName = "$registryServer/gs-spring-boot-docker"
     dir('complete') {
       sh 'cp src/main/docker/Dockerfile target/'
-      azureWebAppPublish azureCredentialsId: 'msp', publishType: 'docker',
+      azureWebAppPublish azureCredentialsId: 'mysp', publishType: 'docker',
                          resourceGroup: resourceGroup, appName: webAppName,
                          dockerFilePath: 'target/Dockerfile', dockerImageName: imageName, dockerImageTag: 'latest',
                          dockerRegistryEndpoint: [credentialsId: 'azurecredential', url: "http://$registryServer"]
