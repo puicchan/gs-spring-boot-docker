@@ -12,7 +12,7 @@ public class Application {
 
     @RequestMapping("/")
     public String home() {
-        StringBuffer buffer = new StringBuffer("Hello Docker World");
+        StringBuffer buffer = new StringBuffer("Hello Docker World!");
         buffer.append("<br>");
         buffer.append("=============================================");
         buffer.append("<br><br><br>");
