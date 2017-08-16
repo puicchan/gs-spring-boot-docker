@@ -12,7 +12,7 @@ node {
   stage('deploy') {
     def resourceGroup = 'pclinuxdemosg'
     def webAppName = 'pclinuxdemo1'
-    def registryServer = 'pcregistry1.azurecr.io'
+    def registryServer = 'pcregistry2.azurecr.io'
     def imageName = "$registryServer/gs-spring-boot-docker"
     dir('complete') {
       sh 'cp src/main/docker/Dockerfile target/'
