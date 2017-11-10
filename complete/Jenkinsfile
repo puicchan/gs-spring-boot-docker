@@ -19,7 +19,7 @@ node {
       azureWebAppPublish azureCredentialsId: 'mysp', publishType: 'docker',
                          resourceGroup: resourceGroup, appName: webAppName,
                          dockerFilePath: 'target/Dockerfile', dockerImageName: imageName, dockerImageTag: 'latest',
-                         dockerRegistryEndpoint: [credentialsId: 'azurecredential', url: "http://$registryServer"]
+                         dockerRegistryEndpoint: [credentialsId: 'c49ec72d-13c6-412b-b74a-0178a4de2d63', url: "http://$registryServer"]
     }
   }
 }
